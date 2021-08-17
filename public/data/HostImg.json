@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "name": "와이파이",
+    "alt": "profileimg",
+    "src": "/images/wifi_on.png"
+  },
+  {
+    "id": 2,
+    "name": "침대 시설",
+    "alt": "profileimg",
+    "src": "/images/bed_on.png"
+  },
+  {
+    "id": 3,
+    "name": "반려동물 출입",
+    "alt": "profileimg",
+    "src": "/images/dog_on.png"
+  },
+  {
+    "id": 4,
+    "name": "주류반입가능",
+    "alt": "profileimg",
+    "src": "/images/beer_on.png"
+  },
+  {
+    "id": 5,
+    "name": "주차이용시설",
+    "alt": "profileimg",
+    "src": "/images/parking_on.png"
+  },
+  {
+    "id": 6,
+    "name": "TV",
+    "alt": "profileimg",
+    "src": "/images/tv_on.png"
+  }
+]
