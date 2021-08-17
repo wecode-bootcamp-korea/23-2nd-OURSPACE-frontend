@@ -6,7 +6,6 @@ function Nav() {
   const [isBlock, setIsBlock] = useState('none');
 
   const handleClick = () => {};
-  console.log(handleClick);
   return (
     <Header>
       <Button>
