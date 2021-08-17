@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "url": "https://www.spacecloud.kr/img/icons/gathering.svg",
+    "text": "파티룸"
+  },
+  {
+    "id": 2,
+    "url": "https://www.spacecloud.kr/img/icons/dance_studio.svg",
+    "text": "연습실"
+  },
+  {
+    "id": 3,
+    "url": "https://www.spacecloud.kr/img/icons/vocal_studio.svg",
+    "text": "보컬연습실"
+  },
+  {
+    "id": 4,
+    "url": "https://www.spacecloud.kr/img/icons/study.svg",
+    "text": "스터디룸"
+  },
+  {
+    "id": 5,
+    "url": "https://www.spacecloud.kr/img/icons/shooting.svg",
+    "text": "촬영스튜디오"
+  },
+  {
+    "id": 6,
+    "url": "https://www.spacecloud.kr/img/icons/meeting.svg",
+    "text": "회의실"
+  },
+  {
+    "id": 7,
+    "url": "https://www.spacecloud.kr/img/icons/seminar.svg",
+    "text": "세미나실"
+  },
+  {
+    "id": 8,
+    "url": "https://www.spacecloud.kr/img/icons/instrumental_room.svg",
+    "text": "악기연습실"
+  }
+]
