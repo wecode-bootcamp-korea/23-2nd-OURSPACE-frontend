@@ -1,40 +1,46 @@
 import axios from 'axios';
 import React from 'react';
 import styled from 'styled-components';
+import { useHistory } from 'react-router';
 import { LOGIN_API } from '../../config';
 
-const kakaoLoginHandler = () => {
-  window.Kakao.Auth.login({
-    success: auth => {
-      console.log(Response);
-      axios(`${LOGIN_API}`, {
-        method: 'GET',
-        headers: {
-          Authorization: auth.access_token,
-        },
-      }).then(result => {
-        if (result.TOKEN) {
-          localStorage.setItem('login_kakao_token', result.TOKEN);
-          alert('로그인 되었습니다!');
-        } else {
-          alert('로그인 정보를 다시 확인해주세요');
-        }
-      });
-    },
-    fail: function (error) {
-      console.log(error);
-    },
-  });
-};
+const SignIn = () => {
+  const history = useHistory();
 
-function SignIn() {
+  const loginwithkakao = () => {
+    window.Kakao.Auth.login({
+      success: async auth => {
+        try {
+          const response = await axios.get(`${LOGIN_API}`, {
+            headers: {
+              Authorization: auth.access_token,
+            },
+          });
+          if (auth.access_token) {
+            localStorage.setItem('login_kakao_token', auth.access_token);
+            alert('로그인 되었습니다!');
+            history.push('/');
+          } else {
+            alert('로그인 정보를 다시 확인해주세요');
+          }
+          console.log(response);
+        } catch (error) {
+          console.error(error);
+        }
+      },
+      fail: error => {
+        console.log(error);
+      },
+    });
+  };
+
   return (
     <LoginContainer>
       <H2>로그인</H2>
       <ContentLogin>
         <Inner>
           <div>
-            <Naver onClick={kakaoLoginHandler}>카카오톡 로그인</Naver>
+            <Naver onClick={loginwithkakao}>카카오톡 로그인</Naver>
           </div>
           <P>
             <Span>또는</Span>
@@ -58,8 +64,7 @@ function SignIn() {
       </ContentLogin>
     </LoginContainer>
   );
-}
-
+};
 export default SignIn;
 
 const LoginContainer = styled.div`
