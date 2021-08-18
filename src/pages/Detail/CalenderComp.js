@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-const CalenderComp = props => {
+const CalenderComp = ({ transferValue }) => {
   const [startDate, setStartDate] = useState(new Date());
   const [theDate, setTheDate] = useState('');
 
   useEffect(() => {
-    const dateValue = theDate;
-    props.transferValue(dateValue);
+    transferValue(theDate);
   }, [theDate]);
 
   const getDateValue = date => {
