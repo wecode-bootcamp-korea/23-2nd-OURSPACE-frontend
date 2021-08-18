@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Main from './pages/Main/Main';
 import Nav from './components/Nav/Nav';
 import ReserveComp from './pages/Detail/ReserveComp';
+import Detail from './pages/Detail/Detail';
 
 class Routes extends React.Component {
   render() {
