@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import DatePicker from 'react-datepicker';
@@ -6,7 +6,12 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 const CalenderComp = props => {
   const [startDate, setStartDate] = useState(new Date());
-  const [dateValue, setDateValue] = useState('');
+  const [theDate, setTheDate] = useState('');
+
+  useEffect(() => {
+    const dateValue = theDate;
+    props.transferValue(dateValue);
+  }, [theDate]);
 
   const getDateValue = date => {
     setStartDate(date);
@@ -26,10 +31,7 @@ const CalenderComp = props => {
       theDay = `${date.getDate()}`;
     }
 
-    const theDate = `${theYear}-${theMonth}-${theDay} `;
-    setDateValue(theDate); // 형식: yyyy-mm-dd
-
-    // props.transferValue(dateValue); // 넘겨줄 값은 dateValue
+    setTheDate(`${theYear}-${theMonth}-${theDay}`);
   };
 
   return (
@@ -111,7 +113,7 @@ const Default = styled.div`
 
 const Textdeco = styled.div`
   position: relative;
-  left: 40px;
+  padding-top: 20px;
   font-size: 12px;
 `;
 
@@ -120,6 +122,7 @@ const Disable = styled.span`
 
   &::before {
     content: '■';
+    padding-right: 5px;
     color: #ccc;
   }
 `;
@@ -129,6 +132,7 @@ const Today = styled.span`
 
   &::before {
     content: '■';
+    padding-right: 5px;
     color: #ffc000;
   }
 `;
@@ -138,6 +142,7 @@ const Choose = styled.span`
 
   &::before {
     content: '■';
+    padding-right: 5px;
     color: #5940ac;
   }
 `;
