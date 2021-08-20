@@ -6,6 +6,9 @@ import Routes from './Routes';
 import GlobalStyle from './styles/GlobalStyle';
 import theme from './styles/theme';
 
+const { Kakao } = window;
+Kakao.init(process.env.REACT_APP_KAKAO_API);
+
 ReactDOM.render(
   <ThemeProvider theme={theme}>
     <GlobalStyle />
