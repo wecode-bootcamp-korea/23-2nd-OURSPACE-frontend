@@ -1,244 +1,317 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
+import { useHistory } from 'react-router';
 import styled from 'styled-components';
+import axios from 'axios';
 import CalenderComp from './CalenderComp';
 
-function Reserve() {
-  const [alertMode, setAlertMode] = useState('alertDisable');
-  const [reserveInfoMode, setReserveInfoMode] = useState('reserveInfoDisable');
-  const [amountMode, setAmountMode] = useState('amountDisable');
-  const [timeValue, setTimeValue] = useState('');
-  const [dateValue, setDateValue] = useState('');
+function ReserveComp(props) {
+  const { id, max_count, min_count, facility, price, title, image } =
+    props.formValues;
+  const [trueFalse, setTrueFalse] = useState();
   const [countValue, setCountValue] = useState(0);
-  // let [amountValue, setAmountValut] = useState(0); // 공간등록 페이지에서 받아서 쓸 예정
+  const [formValues, setFormvalues] = useState({
+    date: '',
+    option: '',
+    count: '',
+  });
+  const history = useHistory();
 
-  useEffect(() => {
-    countValue < 5 && setAlertMode('alertDisable');
-
-    if (dateValue && timeValue) {
-      setReserveInfoMode('reserveInfoAble');
-      setAmountMode('amountAble');
-
-      // fetch() // 예약 가능 유효성 검사를 위해 백엔드에 날짜와 시간 데이터 전달
-    } else {
-      setReserveInfoMode('reserveInfoDisable');
-      setAmountMode('amountDisable');
+  const handleForm = e => {
+    let { name, value } = e.target;
+    if (name === 'minus') {
+      countValue > min_count && setCountValue(countValue - 1);
+      name = 'count';
+      value = countValue;
+    } else if (name === 'plus') {
+      countValue < max_count && setCountValue(countValue + 1);
+      name = 'count';
+      value = countValue;
     }
-  }, [countValue, dateValue, timeValue]);
 
-  // 통신 관련
-
-  // 시간 관련
-  const getTimeValue = e => {
-    const { id } = e.target;
-    setTimeValue(id);
+    setFormvalues({ ...formValues, [name]: value });
   };
 
-  // 날짜 관련
-  const getCalenderValue = date => {
-    setDateValue(date);
+  const handleCalenderValue = date => {
+    setFormvalues({ date: date });
   };
 
-  const reserveInfoForUser = () => {
-    const year = dateValue.slice(0, 4);
-    const month = dateValue.slice(5, 7);
-    const day = dateValue.slice(8, 10);
-    let reserveInfo = '';
+  const handlePrice = () => {
+    const num = parseInt(formValues.option);
+    let parsePrice = '';
+    price !== undefined &&
+      price.map(el => {
+        if (num === el[0]) {
+          parsePrice = el[2];
+        }
+        return parsePrice;
+      });
+    parsePrice = parseInt(parsePrice.split('.')[0]);
+    const result = Intl.NumberFormat('en-IN', {
+      maximumSignificantDigits: 3,
+    }).format(parsePrice);
 
+    return result;
+  };
+
+  const handleImage = () => {
+    let images;
+    if (image !== undefined) {
+      images = image[0];
+    }
+    return images;
+  };
+
+  const handleReserveInfoForUser = () => {
+    const { date, option } = formValues;
+    const year = date.slice(0, 4);
+    const month = date.slice(5, 7);
+    const day = date.slice(8, 10);
     let reserveTime = '';
-    switch (timeValue) {
-      case 'ALL':
-        reserveTime = 'All (09시 ~ 22시)';
-        break;
-      case 'DAY':
-        reserveTime = 'Day (09시 ~ 15시)';
-        break;
-      case 'NIGHT':
-        reserveTime = 'Night (15시 ~ 22시)';
-        break;
-      default:
-        reserveTime = '';
-        break;
+    if (option % 3 === 0) {
+      reserveTime = 'All (09시 ~ 22시)';
+    } else if (option % 3 === 1) {
+      reserveTime = 'Day (09시 ~ 15시)';
+    } else {
+      reserveTime = 'Night (15시 ~ 22시)';
     }
-
-    if (month && timeValue) {
+    let reserveInfo = '';
+    if (month && option) {
       reserveInfo = `${year}년 ${month}월 ${day}일, ${reserveTime}`;
     }
-
     return reserveInfo;
   };
 
-  // 인원 관련
-  const CountBtn = e => {
-    const { id } = e.target;
-    if (id === 'minus') {
-      countValue > 0 && setCountValue(countValue - 1);
-    } else {
-      countValue >= 5
-        ? setAlertMode('alertAble')
-        : setCountValue(countValue + 1);
-    }
+  const handleCheckbox = e => {
+    const { value } = e.target;
+    console.log(value);
   };
 
-  // 가격 관련
+  const transferData = useCallback(async () => {
+    try {
+      const { date, option, count } = formValues;
+      const time = parseInt(option);
+      console.log('try');
+      await axios.post(
+        `http://10.58.3.76:8000/orders?space_id=${id}`,
+        {
+          date: date,
+          option: time,
+          count: count,
+        },
+        {
+          headers: {
+            Authorization: localStorage.getItem('access_token'),
+          },
+        }
+      );
+      console.log('tryend');
+      history.push({
+        pathname: '/reserve',
+        state: {
+          id: id,
+          title: title,
+          images: handleImage(),
+          date: formValues.date,
+          option: formValues.option,
+          price: handlePrice(),
+          count: formValues.count,
+          max_count: max_count,
+          facility: facility,
+        },
+      });
+    } catch (error) {}
+  }, [formValues.count]);
+
+  useEffect(() => {
+    const { date, option } = formValues;
+    if (date && option) {
+      const queryState = `status?date=${date}&option=${option}`;
+      const checkReserveValidation = async () => {
+        try {
+          await axios.get(
+            `http://10.58.3.76:8000/spaces/detail/${id}/${queryState}`
+          );
+          setTrueFalse(true);
+        } catch (error) {
+          setTrueFalse(false);
+        }
+      };
+      checkReserveValidation();
+    }
+  }, [formValues.option]);
+
+  const timeList = [
+    {
+      id: 'all',
+      name: 'option',
+      type: 'radio',
+      content: 'all',
+      value: price !== undefined && price[2][0],
+    },
+    {
+      id: 'day',
+      name: 'option',
+      type: 'radio',
+      content: 'day',
+      value: price !== undefined && price[0][0],
+    },
+    {
+      id: 'night',
+      name: 'option',
+      type: 'radio',
+      content: 'night',
+      value: price !== undefined && price[1][0],
+    },
+  ];
+
+  const spaceCondition = [
+    {
+      id: 1,
+      title: '공간유형',
+      content: '스터디룸',
+    },
+    {
+      id: 2,
+      title: '예약시간',
+      content: '최소 6시간',
+    },
+    {
+      id: 3,
+      title: '수용인원',
+      content: `최대 ${max_count}명`,
+    },
+  ];
 
   return (
     <LayoutReserve>
       <div className="ReserveWrap">
         <ReserveBody>
           <section className="MeetSpaceInfo">
-            <ImgContainer src="./images/test.jpg"></ImgContainer>
-            <SpaceInfoBody>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book. It has
-              survived not only five centuries, but also the leap into
-              electronic typesetting, remaining essentially unchanged. It was
-              popularised in the 1960s with the release of Letraset sheets
-              containing Lorem Ipsum passages, and more recently with desktop
-              publishing software like Aldus PageMaker including versions of
-              Lorem Ipsum.
-            </SpaceInfoBody>
+            <ImgContainer src={handleImage()}></ImgContainer>
+            <SpaceInfoBody></SpaceInfoBody>
           </section>
           <UlContainer>
-            <LiContainer>
-              <LiTitle>공간유형</LiTitle>
-              <span>스터디룸</span>
-            </LiContainer>
-            <LiContainer>
-              <LiTitle>예약시간</LiTitle>
-              <span>최소 6시간</span>
-            </LiContainer>
-            <LiContainer>
-              <LiTitle>수용인원</LiTitle>
-              <span>최대 5명</span>
-            </LiContainer>
+            {spaceCondition.map(el => {
+              return (
+                <LiContainer key={el.id}>
+                  <LiTitle>{el.title}</LiTitle>
+                  <span>{el.content}</span>
+                </LiContainer>
+              );
+            })}
           </UlContainer>
           <section className="FacillityWrap">
             <FlexBoxUl>
-              <FacillityList>
-                <IconBox src="/images/bed_on.png" />
-                <span>침대</span>
-              </FacillityList>
-              <FacillityList>
-                <IconBox src="/images/beer_on.png" />
-                <span>맥주</span>
-              </FacillityList>
-              <FacillityList>
-                <IconBox src="/images/dog_on.png" />
-                <span>
-                  반려
-                  <br />
-                  동물
-                </span>
-              </FacillityList>
-              <FacillityList>
-                <IconBox src="/images/parking_on.png" />
-                <span>주차</span>
-              </FacillityList>
-              <FacillityList>
-                <IconBox src="/images/tv_on.png" />
-                <span>티비</span>
-              </FacillityList>
-              <FacillityList>
-                <IconBox src="/images/wifi_on.png" />
-                <span>
-                  와이
-                  <br />
-                  파이
-                </span>
-              </FacillityList>
+              {facility !== undefined &&
+                facility.map(el => {
+                  return (
+                    <FacillityList key={el.id}>
+                      <IconBox src={el.image} />
+                      <SpanBox>{el.name}</SpanBox>
+                    </FacillityList>
+                  );
+                })}
             </FlexBoxUl>
           </section>
-          <ReserveTitle>예약 선택</ReserveTitle>
-          <CalenderWrap>
-            <CalenderTitle>날짜</CalenderTitle>
-            <CalenderBox>
-              <CalenderComp transferValue={getCalenderValue} />
-            </CalenderBox>
-          </CalenderWrap>
-          <TimeWrap>
-            <TimeTitle>시간</TimeTitle>
-            <TimeBox onChange={getTimeValue}>
-              <TimeLabel htmlFor="ALL">
-                <input id="ALL" name="time" type="radio" />
-                All
-              </TimeLabel>
-              <TimeLabel htmlFor="DAY">
-                <input id="DAY" name="time" type="radio" />
-                Day
-              </TimeLabel>
-              <TimeLabel htmlFor="NIGHT">
-                <input id="NIGHT" name="time" type="radio" />
-                Night
-              </TimeLabel>
-            </TimeBox>
-            <WarningMessage>
-              예약 도중 이탈하시는 경우, 중복 예약 방지 목적으로 10분 동안 해당
-              날짜에 예약하실 수 없습니다. (결제 오류 및 취소 포함)
-            </WarningMessage>
-          </TimeWrap>
-          <div className={reserveInfoMode}>
-            <ReserveInfoTitle>예약 일시</ReserveInfoTitle>
-            <ReserveInfo>{reserveInfoForUser()}</ReserveInfo>
-          </div>
-          <CountWrap>
-            <CountTitle>인원</CountTitle>
-            <div className={alertMode}>최대 수용 인원은 5명입니다.</div>
-            <CountBox>
-              <CountFlexBox>
-                <CountMinusBtn id="minus" onClick={CountBtn}>
-                  -
-                </CountMinusBtn>
-                <CountInput type="number" value={countValue} disabled />
-                <CountPlusBtn id="plus" onClick={CountBtn}>
-                  +
-                </CountPlusBtn>
-              </CountFlexBox>
-            </CountBox>
-          </CountWrap>
-          <div className={amountMode}>
-            <AmountTitle>사용료</AmountTitle>
-            <AmountInfo>￦50,000(데이터)</AmountInfo>
+          <ReserveTitle>
+            예약 선택 하기
+            <ReserveCheck type="checkbox" onClick={handleCheckbox} />
+          </ReserveTitle>
+          <div>
+            <CalenderWrap>
+              <CalenderTitle>날짜</CalenderTitle>
+              <CalenderBox>
+                <CalenderComp transferValue={handleCalenderValue} />
+              </CalenderBox>
+            </CalenderWrap>
+            <TimeWrap>
+              <TimeTitle>시간</TimeTitle>
+              <TimeBox>
+                {timeList.map(el => {
+                  return (
+                    <TimeLabel htmlFor={el.id} key={el.id}>
+                      <input
+                        id={el.id}
+                        name={el.name}
+                        type={el.type}
+                        value={el.value}
+                        checked={+formValues.option === el.value && trueFalse}
+                        onChange={handleForm}
+                      />
+                      {el.content}
+                    </TimeLabel>
+                  );
+                })}
+              </TimeBox>
+              <WarningMessage>
+                예약 도중 이탈하시는 경우, 중복 예약 방지 목적으로 10분 동안
+                해당 날짜에 예약하실 수 없습니다. (결제 오류 및 취소 포함)
+              </WarningMessage>
+            </TimeWrap>
+            <ReserveInfoMode mode={isValid(formValues)}>
+              <ReserveInfoTitle>예약 일시</ReserveInfoTitle>
+              <ReserveInfo>{handleReserveInfoForUser()}</ReserveInfo>
+            </ReserveInfoMode>
+            <CountWrap>
+              <CountTitle>인원</CountTitle>
+              <CountWarnMode mode={isValid(formValues)}>
+                최대 수용 인원은 {max_count}명입니다.
+              </CountWarnMode>
+              <CountBox>
+                <CountFlexBox>
+                  <CountMinusBtn name="minus" onClick={handleForm}>
+                    -
+                  </CountMinusBtn>
+                  <CountInput type="number" value={countValue} disabled />
+                  <CountPlusBtn name="plus" onClick={handleForm}>
+                    +
+                  </CountPlusBtn>
+                </CountFlexBox>
+              </CountBox>
+            </CountWrap>
+            <AmountMode mode={isValid(formValues)}>
+              <AmountTitle>사용료</AmountTitle>
+              <AmountInfo>￦{handlePrice()}</AmountInfo>
+            </AmountMode>
           </div>
         </ReserveBody>
-        <ReserveBtn>바로 예약하기</ReserveBtn>
+        <ReserveBtn onClick={transferData}>바로 예약하기</ReserveBtn>
         {/* 버튼 클릭시 토큰 없으면 로그인 화면으로 이동 / 있으면 예약하기 화면으로 */}
       </div>
     </LayoutReserve>
   );
 }
 
-export default Reserve;
+export default ReserveComp;
+
+export const isValid = form => {
+  const { date, option } = form;
+  let result = '';
+  date && option && (result = 'true');
+  return result;
+};
 
 const LayoutReserve = styled.div`
   width: 338px;
+  background-color: white;
+`;
+
+const ReserveInfoMode = styled.div`
+  display: ${props => (props.mode ? 'block' : 'none')};
+  padding: 32px 0 0;
+`;
+
+const AmountMode = styled.div`
+  display: ${props => (props.mode ? 'flex' : 'none')};
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 32px;
+  border-top: 3px solid #704de4;
 `;
 
 const ReserveBody = styled.div`
   padding: 15px 20px 30px;
   border: 1px solid #704de4;
-
-  .reserveInfoAble {
-    display: block;
-    padding: 32px 0 0;
-  }
-
-  .reserveInfoDisable {
-    display: none;
-  }
-
-  .amountAble {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 32px;
-    border-top: 3px solid #704de4;
-  }
-
-  .amountDisable {
-    display: none;
-  }
 `;
 
 const ImgContainer = styled.img`
@@ -288,7 +361,6 @@ const FacillityList = styled.li`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 70px;
   margin: 24px 5px 0 0;
   font-size: 12px;
 `;
@@ -298,13 +370,26 @@ const IconBox = styled.img`
   opacity: 50%;
 `;
 
-const ReserveTitle = styled.p`
+const SpanBox = styled.p`
+  width: 50px;
+  padding-left: 20px;
+`;
+
+const ReserveTitle = styled.div`
+  position: relative;
   margin-top: 25px;
   padding: 20px 0;
   border-top: 3px solid #704de4;
   border-bottom: 1px solid #ccc;
   font-size: 17px;
   font-weight: bold;
+`;
+
+const ReserveCheck = styled.input`
+  position: absolute;
+  left: 0;
+  width: 250px;
+  text-align: right;
 `;
 
 const CalenderWrap = styled.section`
@@ -370,16 +455,12 @@ const ReserveInfo = styled.p`
 
 const CountWrap = styled.section`
   padding-top: 32px;
+`;
 
-  .alertAble {
-    display: block;
-    margin-top: 15px;
-    color: red;
-  }
-
-  .alertDisable {
-    display: none;
-  }
+const CountWarnMode = styled.div`
+  display: ${props => (props.mode ? 'block' : 'none')};
+  margin-top: 15px;
+  color: red;
 `;
 
 const CountTitle = styled.p`
@@ -464,9 +545,11 @@ const AmountInfo = styled.p`
 const ReserveBtn = styled.button`
   width: 100%;
   height: 60px;
-  margin-top: 10px;
-  margin-bottom: 100px;
   color: #eee;
   border: none;
   background-color: #704de4;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;

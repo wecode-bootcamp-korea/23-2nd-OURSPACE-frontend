@@ -1,14 +1,32 @@
-import React from 'react';
-import { withRouter } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router';
 import styled from 'styled-components';
+import axios from 'axios';
 import Carousel from './Carousel';
+import ReserveComp from './ReserveComp';
 
 function Detail() {
+  const location = useLocation();
+  const [formValues, setFormValues] = useState({});
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const result = await axios.get(
+          `http://10.58.3.76:8000/spaces/detail/${location.state.id}`
+        );
+        setFormValues(result.data.results[0]);
+      } catch (error) {
+        console.log('trasnferError: ', error);
+      }
+    };
+    getData();
+  }, []);
+
   return (
-    <DetailBody>
+    <BodyWrap>
       <LayoutDetail>
         <div>
-          <RoomTitle>TRYGROUND-스터디룸,클래스</RoomTitle>
+          <RoomTitle>TRYGROUND-스터디룸</RoomTitle>
           <RoomSubTitle>
             당신만의 공간으로 새로운 도전을 시작하세요
           </RoomSubTitle>
@@ -16,30 +34,31 @@ function Detail() {
         <BodyContainer>
           <div>
             <ReservePopContainer>
-              reserve 컴포넌트가 들어갈 자리
+              <ReserveComp formValues={formValues} />
             </ReservePopContainer>
             <ImgContainer>
-              <Carousel />
+              <Carousel images={formValues.image} />
             </ImgContainer>
             <BodySubTitle>
               당신만의 공간으로 새로운 도전을 시작하세요
             </BodySubTitle>
-            <p>리뷰 컴포넌트 들어갈 자리</p>
+            <p></p>
           </div>
         </BodyContainer>
       </LayoutDetail>
-    </DetailBody>
+    </BodyWrap>
   );
 }
 
 export default Detail;
 
-const DetailBody = styled.div`
+const BodyWrap = styled.div`
+  height: 1500px;
   background-color: #f6f6f6;
 `;
 
 const LayoutDetail = styled.div`
-  width: 1100px; // 나중에 삭제하기
+  width: 1158px;
   margin: 70px auto;
   padding-top: 50px;
 `;
@@ -67,11 +86,10 @@ const BodyContainer = styled.section`
 const ReservePopContainer = styled.div`
   position: absolute;
   right: 0;
-  border: 1px solid black;
 `;
 
 const ImgContainer = styled.div`
-  width: 640px;
+  width: 773px;
 `;
 
 const BodySubTitle = styled.p`

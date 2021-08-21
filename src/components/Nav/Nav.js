@@ -1,15 +1,25 @@
 import React, { useState } from 'react';
-import { withRouter, Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 function Nav() {
+  const history = useHistory();
   const [isBlock, setIsBlock] = useState('none');
 
-  const handleClick = () => {};
+  const handleToken = () => {
+    const token = localStorage.getItem('login_kakao_token');
+    if (token) {
+      localStorage.removeItem('login_kakao_token');
+      alert('로그아웃되었습니다.');
+    } else {
+      history.push('/signin');
+    }
+  };
+
   return (
     <Header>
       <Button>
-        <OurSpace>a</OurSpace>
+        <OurSpace href="/">a</OurSpace>
       </Button>
       <Wrap>
         <Auto>
@@ -23,7 +33,6 @@ function Nav() {
             }}
             type="text"
             placeholder="지역, 공간유형, 공간명으로 찾아보세요"
-            onClick={handleClick}
           />
         </Auto>
         <Lately id="2" isBlock={isBlock}>
@@ -34,12 +43,10 @@ function Nav() {
         </Lately>
       </Wrap>
       <Space>
-        <NavLink>내 공간 등록하기</NavLink>
+        <NavLink href="/hostpost">내 공간 등록하기</NavLink>
       </Space>
-      <KakaoButton>
-        <Link to="/signin">
-          <Login>로그인</Login>
-        </Link>
+      <KakaoButton onClick={handleToken}>
+        <Login>로그인</Login>
       </KakaoButton>
     </Header>
   );
@@ -146,6 +153,7 @@ const NavLink = styled.a`
   color: #333;
   cursor: pointer;
   font-size: 20px;
+  text-decoration: none;
 `;
 const KakaoButton = styled.button`
   position: absolute;

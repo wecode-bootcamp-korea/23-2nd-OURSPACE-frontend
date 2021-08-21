@@ -1,7 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { withRouter } from 'react-router-dom';
+import React from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
 
 function HostPerson({ number, setNumber }) {
   const onIncrease = () => {

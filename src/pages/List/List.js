@@ -19,8 +19,8 @@ function List() {
   const [areaData, setareaDate] = useState([]);
   const [areaSelect, setAreaSelect] = useState('');
 
-  const [categoryText, setcategoryText] = useState('');
-  const [categoryId, setcategoryId] = useState('');
+  const [categoryText, setcategoryText] = useState();
+  const [categoryId, setcategoryId] = useState();
 
   useEffect(() => {
     setcategoryText(location.state.categoryText);
@@ -47,8 +47,12 @@ function List() {
       items: 10,
       preItems: 0,
     });
+
     history.push({
-      pathname: `/list?category=${categoryId}&${parseQuery(objQuery)}`,
+      pathname: `/list?category=${location.state.category}&${parseQuery(
+        objQuery
+      )}`,
+      state: { category: categoryId },
     });
   };
 
@@ -74,7 +78,7 @@ function List() {
   const getData = async value => {
     try {
       const response = await axios.get(
-        `${API.SPACE}?category=${categoryId}&${parseQuery(value)}`
+        `${API.SPACE}?category=${location.state.category}&${parseQuery(value)}`
       );
       const result = response.data.RESULT.slice(item.preItems, item.items);
       setProductList(prev => [...prev, ...result]);
@@ -150,5 +154,5 @@ function List() {
 export default List;
 
 const ListContent = styled.div`
-  padding-top: 50px;
+  padding-top: 105px;
 `;

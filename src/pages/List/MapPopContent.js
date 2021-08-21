@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import ListContentLineBox from './ListContentLineBox';
-import './MapPopContent.scss';
+import './MapPopContent.css';
 
 function MapPopContent({ data }) {
   return (

@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { withRouter } from 'react-router-dom';
+import React, { useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import HostRadioCom from './HostRadioCom';

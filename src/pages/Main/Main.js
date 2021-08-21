@@ -18,7 +18,14 @@ function Main() {
           <Btns>
             <Center>
               {productList.map(el => {
-                return <BtnImage src={el.url} text={el.text} id={el.id} />;
+                return (
+                  <BtnImage
+                    key={el.id}
+                    id={el.id}
+                    src={el.url}
+                    text={el.text}
+                  />
+                );
               })}
             </Center>
           </Btns>

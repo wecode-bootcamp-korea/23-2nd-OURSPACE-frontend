@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { withRouter } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { css } from 'styled-components';
 import axios from 'axios';
@@ -12,6 +12,8 @@ import HostLocation from './HostLocation';
 import { HOST_API } from '../../config';
 
 function HostPost() {
+  const history = useHistory();
+
   const [title, setTitle] = useState('');
 
   const titleChange = e => {
@@ -83,6 +85,7 @@ function HostPost() {
       response.data.message === 'success'
         ? alert('와 성공했어용 !')
         : alert('아앗,, 다시');
+      history.push('/');
     } catch (error) {
       console.error(error);
     }
@@ -224,6 +227,7 @@ function HostPost() {
 export default HostPost;
 
 const HostPostWrap = styled.div`
+  padding-top: 78px;
   background: #f6f6f6;
 `;
 
