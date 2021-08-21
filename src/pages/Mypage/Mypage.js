@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { API } from '../../config';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import ReservationCard from './ReservationCard';
+import { API } from '../../config';
 
 function Mypage() {
   const [reservationState, setreservationState] = useState([]);

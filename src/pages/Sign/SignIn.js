@@ -1,7 +1,7 @@
-import axios from 'axios';
 import React from 'react';
-import styled from 'styled-components';
 import { useHistory } from 'react-router';
+import styled from 'styled-components';
+import axios from 'axios';
 import { LOGIN_API } from '../../config';
 
 const SignIn = () => {
@@ -18,7 +18,7 @@ const SignIn = () => {
           });
           if (auth.access_token) {
             localStorage.setItem('login_kakao_token', auth.access_token);
-            alert('로그인 되었습니다!');
+            alert('로그인되었습니다!');
             history.push('/');
           } else {
             alert('로그인 정보를 다시 확인해주세요');
@@ -35,8 +35,8 @@ const SignIn = () => {
 
   return (
     <LoginContainer>
-      <H2>로그인</H2>
       <ContentLogin>
+        <H2>로그인</H2>
         <Inner>
           <div>
             <Naver onClick={loginwithkakao}>카카오톡 로그인</Naver>
@@ -71,9 +71,10 @@ const LoginContainer = styled.div`
   background: #f6f6f6;
   height: 100vh;
 `;
+
 const H2 = styled.h2`
-  padding-top: 120px;
-  padding-bottom: 20px;
+  padding-top: 100px;
+  padding-bottom: 50px;
   font-size: 34px;
   text-align: center;
   letter-spacing: -0.5px;

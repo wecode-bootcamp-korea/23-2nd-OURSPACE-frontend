@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -28,7 +28,6 @@ const BtnImages = styled.div`
   display: inline-block;
   margin-top: 50px;
   text-align: center;
-  /* width: 12.5%; */
 `;
 
 const Button = styled.button`

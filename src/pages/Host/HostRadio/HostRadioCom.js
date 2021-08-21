@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { withRouter } from 'react-router-dom';
+import React from 'react';
 import styled from 'styled-components';
 
 function HostRadioCom({ checkedInputs, setCheckedInputs, id, name }) {

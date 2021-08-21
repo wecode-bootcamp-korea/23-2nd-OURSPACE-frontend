@@ -1,22 +1,32 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import 'slick-carousel/slick/slick.css';
 import Slider from 'react-slick';
 import ListImgeSlider from './ListImgeSlider';
-import { useHistory } from 'react-router-dom';
+import 'slick-carousel/slick/slick.css';
 
 function ListContentLineBox({ Listdata }) {
   const { title, district, price, max_count, image, id } = Listdata;
   let history = useHistory();
   const goToDetail = () => {
-    history.push(`/detail/${id}`);
+    history.push({
+      pathname: `/spaces/detail/${id}`,
+      state: { id: id },
+    });
   };
   return (
     <ListContentLine onClick={goToDetail}>
       <div className="listImages">
         <Slider {...SLIDER_SETTING}>
           {image.map((img, index) => {
-            return <ListImgeSlider key={index} img={img} alt={title} />;
+            return (
+              <ListImgeSlider
+                key={index}
+                img={img}
+                alt={title}
+                onClick={goToDetail}
+              />
+            );
           })}
         </Slider>
       </div>
@@ -47,6 +57,7 @@ const SLIDER_SETTING = {
 const ListContentLine = styled.a`
   display: block;
   border: 1px solid #ddd;
+  z-index: 999;
 `;
 
 const ListTitle = styled.div`
