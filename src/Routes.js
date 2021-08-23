@@ -8,6 +8,8 @@ import HostPost from './pages/Host/HostPost';
 import SignIn from './pages/Sign/SignIn';
 import Reserve from './pages/List/Reserve';
 import Mypage from './pages/Mypage/Mypage';
+import Review from './Review/Review';
+import ReviewPost from './Review/ReviewPost';
 
 class Routes extends React.Component {
   render() {
@@ -23,6 +25,8 @@ class Routes extends React.Component {
           <Route exact path="/signin" component={SignIn} />
           <Route exact path="/spaces/detail/:id" component={Detail} />
           <Route exact path="/reserve" component={Reserve} />
+          <Route exact path="/review" component={Review} />
+          <Route exact path="/reviewpost" component={ReviewPost} />
         </Switch>
       </Router>
     );
