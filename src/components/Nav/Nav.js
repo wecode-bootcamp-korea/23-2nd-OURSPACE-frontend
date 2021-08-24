@@ -42,6 +42,11 @@ function Nav() {
           <Login>로그인</Login>
         </Link>
       </KakaoButton>
+      <Logout>
+        <Link to="/main">
+          <Out>로그아웃</Out>
+        </Link>
+      </Logout>
     </Header>
   );
 }
@@ -135,7 +140,7 @@ const Input = styled.input`
 `;
 const Space = styled.div`
   position: absolute;
-  right: 85px;
+  right: 185px;
   top: 0;
 `;
 const NavLink = styled.a`
@@ -153,8 +158,23 @@ const KakaoButton = styled.button`
   width: 88px;
   height: auto;
   top: 0;
-  right: 0;
-  padding: 28px 30px;
+  right: 100px;
+  padding: 25px 30px;
+  z-index: 10;
+  background: none;
+  color: inherit;
+  border: none;
+  outline: inherit;
+  cursor: pointer;
+  vertical-align: middle;
+`;
+const Logout = styled.button`
+  position: absolute;
+  width: 88px;
+  height: auto;
+  top: 0;
+  right: 50px;
+  padding: 25px 30px;
   z-index: 10;
   background: none;
   color: inherit;
@@ -170,6 +190,14 @@ const Login = styled.i`
   background-image: url('/images/kakaotalk.png');
   background-size: cover;
   color: transparent;
+  background-repeat: no-repeat;
+`;
+const Out = styled.i`
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background-image: url('/image/log-out.png');
+  background-size: cover;
   background-repeat: no-repeat;
 `;
 const Lately = styled.div`
