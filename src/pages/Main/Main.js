@@ -10,7 +10,6 @@ function Main() {
       setProductList(response.data);
     });
   }, []);
-
   return (
     <MainContainer>
       <Wrapper>
@@ -19,7 +18,7 @@ function Main() {
           <Btns>
             <Center>
               {productList.map(el => {
-                return <BtnImage src={el.url} text={el.text} />;
+                return <BtnImage src={el.url} text={el.text} id={el.id} />;
               })}
             </Center>
           </Btns>

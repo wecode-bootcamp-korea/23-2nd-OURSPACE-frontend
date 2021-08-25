@@ -6,6 +6,7 @@ import ReserveComp from './pages/Detail/ReserveComp';
 import Detail from './pages/Detail/Detail';
 import List from './pages/List/List';
 import HostPost from './pages/Host/HostPost';
+import Mypage from './pages/Mypage/Mypage';
 
 class Routes extends React.Component {
   render() {
@@ -18,6 +19,7 @@ class Routes extends React.Component {
           <Route exact path="/list" component={List} />
           <Route exact path="/list:search" component={List} />
           <Route exact path="/hostpost" component={HostPost} />
+          <Route exact path="/mypage" component={Mypage} />
         </Switch>
       </Router>
     );
