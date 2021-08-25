@@ -1,13 +1,15 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 import Result from './Result';
 import Filters from './Filters';
 import ListContents from './ListContents';
+import { API } from '../../config';
 
 function List() {
   const history = useHistory();
+  const location = useLocation();
   const [productList, setProductList] = useState([]);
   const [item, setItem] = useState({
     items: 10,
@@ -37,7 +39,9 @@ function List() {
       items: 10,
       preItems: 0,
     });
-    history.push({ pathname: `/List?category=1&${parseQuery(objQuery)}` });
+    history.push({
+      pathname: `/list?category=${location.state.id}&${parseQuery(objQuery)}`,
+    });
   };
 
   const handlerDistrict = (value, areaName) => {
@@ -45,22 +49,28 @@ function List() {
     inputQuery(value);
   };
 
-  // axios.create
-  const getData = async value => {
+  const getArea = async () => {
     try {
-      const response = await axios.get(
-        `http://10.58.3.17:8000/spaces?category=1&${parseQuery(value)}`
-      );
-      const result = response.data.RESULT.spaces.slice(
-        item.preItems,
-        item.items
-      );
-      setProductList(prev => [...prev, ...result]);
-      const district = response.data.RESULT.district;
+      const response = await axios.get(`${API.DISTRICT}`);
+      const district = response.data.RESULT;
       setareaDate(prev => ({
         ...prev,
         district,
       }));
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  // axios.create
+  const getData = async value => {
+    try {
+      const response = await axios.get(
+        `${API.SPACE}?category=${location.state.id}&${parseQuery(value)}`
+      );
+      const result = response.data.RESULT.slice(item.preItems, item.items);
+      setProductList(prev => [...prev, ...result]);
+      getArea();
     } catch (e) {
       console.error(e);
     }
@@ -109,7 +119,7 @@ function List() {
 
   return (
     <ListContent>
-      <Result />
+      <Result categoryText={location.state.categoryText} />
       <Filters
         personCount={personCount}
         increasePerson={increasePerson}

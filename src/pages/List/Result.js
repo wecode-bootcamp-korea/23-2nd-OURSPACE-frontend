@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
-function Result() {
+function Result({ categoryText }) {
   return (
     <ResultContent>
-      <span>녹음실</span>(으)로 검색한 결과입니다.
+      <span>{categoryText}</span>(으)로 검색한 결과입니다.
     </ResultContent>
   );
 }

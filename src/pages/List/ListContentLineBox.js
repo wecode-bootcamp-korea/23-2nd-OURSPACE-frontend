@@ -3,11 +3,16 @@ import styled from 'styled-components';
 import 'slick-carousel/slick/slick.css';
 import Slider from 'react-slick';
 import ListImgeSlider from './ListImgeSlider';
+import { useHistory } from 'react-router-dom';
 
 function ListContentLineBox({ Listdata }) {
-  const { title, district, price, max_count, image } = Listdata;
+  const { title, district, price, max_count, image, id } = Listdata;
+  let history = useHistory();
+  const goToDetail = () => {
+    history.push(`/detail/${id}`);
+  };
   return (
-    <ListContentLine>
+    <ListContentLine onClick={goToDetail}>
       <div className="listImages">
         <Slider {...SLIDER_SETTING}>
           {image.map((img, index) => {
@@ -39,12 +44,7 @@ const SLIDER_SETTING = {
   slidesToScroll: 1,
 };
 
-const ListBox = styled.li`
-  width: 33.333333%;
-  padding: 10px;
-`;
-
-const ListContentLine = styled.div`
+const ListContentLine = styled.a`
   border: 1px solid #ddd;
 `;
 

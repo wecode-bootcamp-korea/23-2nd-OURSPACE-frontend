@@ -27,8 +27,8 @@ function ListOption({ inputQuery }) {
 export default ListOption;
 
 const OPTIONS = [
-  { id: 1, text: '베스트공간 순', value: { order: 'best' } },
   { id: 2, text: '가격 높은순', value: { order: 'desc' } },
+  { id: 1, text: '베스트공간 순', value: { order: 'best' } },
   { id: 3, text: '가격 낮은순', value: { order: 'aesc' } },
 ];
 

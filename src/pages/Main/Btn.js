@@ -1,12 +1,22 @@
 import React, { useEffect, useCallback, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 function BtnImage(props) {
+  const { id, text } = props;
+  const history = useHistory();
   return (
-    <BtnImages>
+    <BtnImages
+      onClick={() =>
+        history.push({
+          pathname: `/list?category=${props.id}`,
+          state: { category: id, categoryText: text },
+        })
+      }
+    >
       <Button>
         <MainImage {...props} />
-        <Text>{props.text}</Text>
+        <Text>{text}</Text>
       </Button>
     </BtnImages>
   );
