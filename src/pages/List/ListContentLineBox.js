@@ -45,6 +45,7 @@ const SLIDER_SETTING = {
 };
 
 const ListContentLine = styled.a`
+  display: block;
   border: 1px solid #ddd;
 `;
 
