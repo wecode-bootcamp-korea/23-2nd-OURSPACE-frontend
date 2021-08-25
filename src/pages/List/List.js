@@ -19,6 +19,14 @@ function List() {
   const [areaData, setareaDate] = useState([]);
   const [areaSelect, setAreaSelect] = useState('');
 
+  const [categoryText, setcategoryText] = useState('');
+  const [categoryId, setcategoryId] = useState('');
+
+  useEffect(() => {
+    setcategoryText(location.state.categoryText);
+    setcategoryId(location.state.category);
+  }, []);
+
   const getCalenderValue = dateStr => {
     inputQuery({ date: dateStr });
   };
@@ -40,7 +48,7 @@ function List() {
       preItems: 0,
     });
     history.push({
-      pathname: `/list?category=${location.state.id}&${parseQuery(objQuery)}`,
+      pathname: `/list?category=${categoryId}&${parseQuery(objQuery)}`,
     });
   };
 
@@ -66,7 +74,7 @@ function List() {
   const getData = async value => {
     try {
       const response = await axios.get(
-        `${API.SPACE}?category=${location.state.id}&${parseQuery(value)}`
+        `${API.SPACE}?category=${categoryId}&${parseQuery(value)}`
       );
       const result = response.data.RESULT.slice(item.preItems, item.items);
       setProductList(prev => [...prev, ...result]);
@@ -119,7 +127,7 @@ function List() {
 
   return (
     <ListContent>
-      <Result categoryText={location.state.categoryText} />
+      <Result categoryText={categoryText} />
       <Filters
         personCount={personCount}
         increasePerson={increasePerson}
