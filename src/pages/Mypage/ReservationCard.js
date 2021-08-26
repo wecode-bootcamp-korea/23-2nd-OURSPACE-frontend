@@ -49,31 +49,31 @@ function ReservationCard({ reservationData }) {
 export default ReservationCard;
 
 const ReservationLink = styled.a`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   position: relative;
-  text-decoration: none;
-  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 20px 15px;
+  border-bottom: 1px solid #ddd;
+  text-decoration: none;
 
   &:after {
     content: '';
-    display: block;
     position: absolute;
     top: 0;
     left: 0;
     bottom: 0;
     right: 0;
-    background: ${props => (props.IsExpired ? 'rgba(0,0,0,0.07)' : '#fff')};
     z-index: ${props => (props.IsExpired ? 1 : -1)};
+    display: block;
+    background: ${props => (props.IsExpired ? 'rgba(0,0,0,0.07)' : '#fff')};
   }
 `;
 
 const ReservationInfo = styled.div`
-  width: calc(100% - 300px);
   display: flex;
   align-items: center;
+  width: calc(100% - 300px);
 `;
 
 const Img = styled.img`
@@ -82,24 +82,24 @@ const Img = styled.img`
 `;
 
 const Info = styled.div`
-  width: calc(100% - 100px);
   padding-left: 15px;
+  width: calc(100% - 100px);
 `;
 
 const Tilte = styled.h4`
+  margin-bottom: 8px;
   color: #333;
   font-size: 22px;
+  font-weight: 500;
   line-height: 1.4em;
   letter-spacing: 0.01em;
-  font-weight: 500;
-  margin-bottom: 8px;
 `;
 
 const SubTitle = styled.p`
+  margin-bottom: 15px;
   color: #222;
   font-size: 15px;
   line-height: 1.5em;
-  margin-bottom: 15px;
 `;
 
 const Address = styled.p`
@@ -114,11 +114,12 @@ const ReservationPriceDayOption = styled.div`
 `;
 
 const Price = styled.p`
+  margin-bottom: 8px;
   color: #333;
   font-size: 18px;
-  line-height: 1.5em;
   font-weight: 500;
-  margin-bottom: 8px;
+  line-height: 1.5em;
+
   span {
     color: #6d3afb;
     font-weight: 500;
@@ -126,11 +127,12 @@ const Price = styled.p`
 `;
 
 const Day = styled.p`
+  margin-bottom: 8px;
   color: #333;
   font-size: 18px;
-  line-height: 1.3em;
   font-weight: 500;
-  margin-bottom: 8px;
+  line-height: 1.3em;
+
   span {
     color: #6d3afb;
     font-weight: 500;
@@ -140,8 +142,9 @@ const Day = styled.p`
 const Option = styled.p`
   color: #333;
   font-size: 18px;
-  line-height: 1.3em;
   font-weight: 500;
+  line-height: 1.3em;
+
   span {
     color: #6d3afb;
     font-weight: 500;

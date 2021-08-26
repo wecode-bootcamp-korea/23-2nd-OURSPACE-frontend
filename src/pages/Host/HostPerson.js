@@ -56,16 +56,16 @@ const FormBoxAmenity = styled.div`
 `;
 const FormTextAmenity = styled.div`
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   padding-bottom: 10px;
   border-bottom: 1px solid #777;
 `;
 
 const Reserve = styled.div`
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   margin: 30px 0;
 `;
 
@@ -79,24 +79,23 @@ const ButtonAmount = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 50px;
   width: 200px;
+  height: 50px;
   border: 1px solid #e0e0e0;
 `;
 
 const ButtonMin = styled.button`
-  height: 100%;
   width: 50px;
-  background-color: transparent;
+  height: 100%;
+  background-color: #e6e6e6;
   border: 0 solid #777;
   font-size: 20px;
-  background-color: #e6e6e6;
   cursor: pointer;
 `;
 
 const ButtonPlus = styled.button`
-  height: 100%;
   width: 50px;
+  height: 100%;
   background-color: #e6e6e6;
   border: 0 solid #777;
   font-size: 20px;

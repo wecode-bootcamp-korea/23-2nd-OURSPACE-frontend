@@ -40,8 +40,8 @@ const ListOptions = styled.div`
 
 const Select = styled.ul`
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   padding: 6px;
 `;
 
@@ -51,19 +51,19 @@ const Option = styled.li`
 
 const OptionBtn = styled.button`
   position: relative;
-  background: transparent;
-  border: 0;
   padding: 0;
   color: #333;
+  background: transparent;
+  border: 0;
   font-size: 18px;
   line-height: 1.3em;
 
   &:after {
     content: '';
-    display: ${props => (props.clickId === props.clicked ? 'block' : 'none')};
     position: absolute;
-    bottom: -5px;
     left: 0;
+    bottom: -5px;
+    display: ${props => (props.clickId === props.clicked ? 'block' : 'none')};
     width: 100%;
     height: 3px;
     background: #6d3afb;

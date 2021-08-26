@@ -2,17 +2,18 @@
   position: absolute;
   top: 0;
   right: 0;
+  z-index: 1;
   width: 20px;
   height: 20px;
   text-indent: -999em;
-  z-index: 1;
 }
+
 .colse:after {
   content: 'X';
+  position: absolute;
+  top: 0;
+  display: block;
   color: #333;
   font-size: 24px;
   text-indent: 0;
-  display: block;
-  position: absolute;
-  top: 0;
 }

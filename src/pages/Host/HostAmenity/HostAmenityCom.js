@@ -41,13 +41,13 @@ const FormIconList = styled.ul`
 `;
 
 const Label = styled.label`
-  width: 90px;
-  height: 90px;
-  border: 1px solid #e0e0e0;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 90px;
+  height: 90px;
   margin-top: 40px;
+  border: 1px solid #e0e0e0;
   cursor: pointer;
 `;
 
@@ -61,13 +61,14 @@ const FormIconImg = styled.img.attrs(props => ({
 `;
 
 const FormIconBox = styled.input.attrs({ type: 'checkbox' })`
+  display: none;
+
   &:checked {
     display: none;
   }
   &:checked + ${FormIconImg} {
     opacity: 1;
   }
-  display: none;
 `;
 
 const FormIconText = styled.p`

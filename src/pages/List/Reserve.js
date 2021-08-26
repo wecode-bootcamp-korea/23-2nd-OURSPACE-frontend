@@ -33,7 +33,6 @@ function Reserve() {
   const handleInputValue = e => {
     const { name, value } = e.target;
     setInputValue({ ...inputValue, [name]: value });
-    console.log(inputValue);
   };
 
   const reserveInfoList = [

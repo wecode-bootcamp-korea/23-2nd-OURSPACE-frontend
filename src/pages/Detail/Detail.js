@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import Carousel from './Carousel';
 import ReserveComp from './ReserveComp';
+import { API } from '../../config';
 
 function Detail() {
   const location = useLocation();
@@ -11,9 +12,7 @@ function Detail() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const result = await axios.get(
-          `http://10.58.3.76:8000/spaces/detail/${location.state.id}`
-        );
+        const result = await axios.get(`${API.DETAIL}/${location.state.id}`);
         setFormValues(result.data.results[0]);
       } catch (error) {
         console.log('trasnferError: ', error);
@@ -53,7 +52,7 @@ function Detail() {
 export default Detail;
 
 const BodyWrap = styled.div`
-  height: 1500px;
+  height: 2000px;
   background-color: #f6f6f6;
 `;
 
@@ -90,6 +89,7 @@ const ReservePopContainer = styled.div`
 
 const ImgContainer = styled.div`
   width: 773px;
+  height: 580px;
 `;
 
 const BodySubTitle = styled.p`

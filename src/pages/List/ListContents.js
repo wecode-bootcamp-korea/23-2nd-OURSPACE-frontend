@@ -21,9 +21,9 @@ function ListContents({ productList, inputQuery }) {
 export default ListContents;
 
 const ListContentWrap = styled.div`
+  padding-top: 50px;
   border-top: 1px solid #ddd;
   background: #f5f5f5;
-  padding-top: 50px;
 `;
 
 const ListContentWidth = styled.div`

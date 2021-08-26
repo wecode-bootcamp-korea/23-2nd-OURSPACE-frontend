@@ -58,38 +58,39 @@ function HostLocation({ location, setLocation }) {
 export default HostLocation;
 
 const FormCheckBoxList = styled.div`
-  width: 900px;
   display: flex;
   justify-content: space-between;
+  width: 900px;
 `;
 
 const FormCheckText = styled.span`
-  font-size: 18px;
-  width: 110px;
-  height: 35px;
-  background: #e6e6e6;
-  border-radius: 50px;
-  border: none;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 110px;
+  height: 35px;
+  background: #e6e6e6;
+  border: none;
+  border-radius: 50px;
+  font-size: 18px;
   cursor: pointer;
   color: #777;
 `;
 
 const FormCheckLeft = styled.input.attrs({ type: 'radio' })`
+  display: none;
   &:checked {
-    background: none;
-    padding: 0px 10px;
-    text-align: center;
+    display: none;
     height: 35px;
+    padding: 0px 10px;
+    background: none;
+    text-align: center;
     line-height: 33px;
     font-weight: 500;
-    display: none;
   }
+
   &:checked + ${FormCheckText} {
     background: #e4794d;
     color: #fff;
   }
-  display: none;
 `;

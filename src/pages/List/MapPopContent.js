@@ -16,10 +16,10 @@ export default MapPopContent;
 
 const MapWrap = styled.div`
   position: absolute;
-  bottom: calc(100% + 20px);
   left: 50%;
+  bottom: calc(100% + 20px);
   width: 300px;
+  padding: 15px;
   transform: translateX(-50%);
   background: #fff;
-  padding: 15px;
 `;

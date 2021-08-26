@@ -52,61 +52,61 @@ const Img = styled.div`
   }
 `;
 
-const ListTitle = styled.div`
-  padding: 15px;
-  background: #fff;
-`;
+// const ListTitle = styled.div`
+//   padding: 15px;
+//   background: #fff;
+// `;
 
-const Title = styled.div`
-  margin-bottom: 8px;
+// const Title = styled.div`
+//   margin-bottom: 8px;
 
-  h3 {
-    color: #333;
-    font-size: 19px;
-    line-height: 1.4em;
-    letter-spacing: -0.01em;
-    font-weight: 500;
-    margin-bottom: 8px;
-  }
+//   h3 {
+//     color: #333;
+//     font-size: 19px;
+//     line-height: 1.4em;
+//     letter-spacing: -0.01em;
+//     font-weight: 500;
+//     margin-bottom: 8px;
+//   }
 
-  p {
-    color: #555;
-    font-size: 16px;
-    line-height: 1.3em;
-    padding-left: 15px;
-    position: relative;
+//   p {
+//     color: #555;
+//     font-size: 16px;
+//     line-height: 1.3em;
+//     padding-left: 15px;
+//     position: relative;
 
-    &:before {
-      content: '';
-      display: block;
-      position: absolute;
-      top: 4px;
-      left: 0;
-      width: 10px;
-      height: 15px;
-      background-size: 100% 100%;
-      background-repeat: no-repeat;
-      background-position: 0;
-      background-image: url('/images/location.png');
-    }
-  }
-`;
+//     &:before {
+//       content: '';
+//       display: block;
+//       position: absolute;
+//       top: 4px;
+//       left: 0;
+//       width: 10px;
+//       height: 15px;
+//       background-size: 100% 100%;
+//       background-repeat: no-repeat;
+//       background-position: 0;
+//       background-image: url('/images/location.png');
+//     }
+//   }
+// `;
 
-const Content = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+// const Content = styled.div`
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
 
-  h4 {
-    color: #6d3afb;
-    font-size: 21px;
-    line-height: 1.3em;
-    font-weight: 500;
-  }
+//   h4 {
+//     color: #6d3afb;
+//     font-size: 21px;
+//     line-height: 1.3em;
+//     font-weight: 500;
+//   }
 
-  p {
-    color: #555;
-    font-size: 14px;
-    line-height: 1.3em;
-  }
-`;
+//   p {
+//     color: #555;
+//     font-size: 14px;
+//     line-height: 1.3em;
+//   }
+// `;
