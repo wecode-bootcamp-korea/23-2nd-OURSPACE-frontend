@@ -56,8 +56,8 @@ const SLIDER_SETTING = {
 
 const ListContentLine = styled.a`
   display: block;
-  border: 1px solid #ddd;
   z-index: 999;
+  border: 1px solid #ddd;
 `;
 
 const ListTitle = styled.div`
@@ -69,27 +69,27 @@ const Title = styled.div`
   margin-bottom: 8px;
 
   h3 {
+    margin-bottom: 8px;
     color: #333;
     font-size: 19px;
+    font-weight: 500;
     line-height: 1.4em;
     letter-spacing: -0.01em;
-    font-weight: 500;
-    margin-bottom: 8px;
   }
 
   p {
+    position: relative;
+    padding-left: 15px;
     color: #555;
     font-size: 16px;
     line-height: 1.3em;
-    padding-left: 15px;
-    position: relative;
 
     &:before {
       content: '';
-      display: block;
       position: absolute;
       top: 4px;
       left: 0;
+      display: block;
       width: 10px;
       height: 15px;
       background-size: 100% 100%;
@@ -102,14 +102,14 @@ const Title = styled.div`
 
 const Content = styled.div`
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
 
   h4 {
     color: #6d3afb;
     font-size: 21px;
-    line-height: 1.3em;
     font-weight: 500;
+    line-height: 1.3em;
   }
 
   p {

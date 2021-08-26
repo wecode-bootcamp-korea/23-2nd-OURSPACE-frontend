@@ -11,7 +11,7 @@ function Mypage() {
     try {
       const response = await axios.get(`${API.MYORDER}`, {
         headers: {
-          Authorization: localStorage.getItem('access_token'),
+          Authorization: localStorage.getItem('login_kakao_token'),
         },
       });
       setreservationState(response.data.results);
@@ -46,15 +46,15 @@ export default Mypage;
 const MyPageWrap = styled.div`
   max-width: 1160px;
   margin: 0 auto;
-  padding-top: 50px;
+  padding-top: 120px;
 `;
 
 const MyPageTitle = styled.h3`
-  text-align: center;
   margin-bottom: 55px;
   color: #333;
+  text-align: center;
   font-size: 30px;
+  font-weight: 500;
   line-height: 1.4em;
   letter-spacing: 0.05em;
-  font-weight: 500;
 `;

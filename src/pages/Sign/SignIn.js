@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
 import axios from 'axios';
-import { LOGIN_API } from '../../config';
+import { API } from '../../config';
 
 const SignIn = () => {
   const history = useHistory();
@@ -11,14 +11,17 @@ const SignIn = () => {
     window.Kakao.Auth.login({
       success: async auth => {
         try {
-          const response = await axios.get(`${LOGIN_API}`, {
+          const response = await axios.get(`${API.LOGIN_API}`, {
             headers: {
               Authorization: auth.access_token,
             },
           });
-          if (auth.access_token) {
-            localStorage.setItem('login_kakao_token', auth.access_token);
-            alert('로그인되었습니다!');
+          if (response.data.access_token) {
+            localStorage.setItem(
+              'login_kakao_token',
+              response.data.access_token
+            );
+            // alert('로그인되었습니다!');
             history.push('/');
           } else {
             alert('로그인 정보를 다시 확인해주세요');
@@ -81,6 +84,7 @@ const H2 = styled.h2`
   line-height: 1.2;
   color: #000;
 `;
+
 const ContentLogin = styled.section`
   position: relative;
   display: block;
@@ -90,6 +94,7 @@ const ContentLogin = styled.section`
   margin: 0 auto;
   background: none;
 `;
+
 const Inner = styled.div`
   width: 648px;
   padding: 32px;
@@ -110,6 +115,7 @@ const Naver = styled.button`
   text-align: center;
   border-radius: 5px;
 `;
+
 const P = styled.p`
   position: relative;
   width: 100%;
@@ -126,6 +132,7 @@ const P = styled.p`
     background: #ebebeb;
   }
 `;
+
 const Span = styled.span`
   display: inline-block;
   position: relative;
@@ -134,9 +141,11 @@ const Span = styled.span`
   font-size: 14px;
   background: #fff;
 `;
+
 const Field = styled.div`
   padding-top: 30px;
 `;
+
 const Input = styled.input`
   height: 48px;
   display: inline-block;
@@ -148,6 +157,7 @@ const Input = styled.input`
   font-size: 14px;
   margin-bottom: 16px;
 `;
+
 const Left = styled.p`
   float: left;
 `;
@@ -160,11 +170,13 @@ const Label = styled.label`
   cursor: pointer;
   color: #000;
 `;
+
 const Pw = styled.p`
   float: right;
   font-size: 14px;
   cursor: pointer;
 `;
+
 const Button = styled.button`
   display: block;
   width: 100%;

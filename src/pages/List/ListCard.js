@@ -13,6 +13,6 @@ function ListCard({ Listdata }) {
 export default ListCard;
 
 const ListBox = styled.li`
-  width: 33.333333%;
   padding: 10px;
+  width: 33.333333%;
 `;

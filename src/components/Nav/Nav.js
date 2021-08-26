@@ -16,6 +16,25 @@ function Nav() {
     }
   };
 
+  const movePage = () => {
+    const token = localStorage.getItem('login_kakao_token');
+    if (token) {
+      history.push('/hostpost');
+    } else {
+      alert('로그인 후 이용가능합니다.');
+    }
+  };
+
+  const moveMyPage = () => {
+    const token = localStorage.getItem('login_kakao_token');
+    if (token) {
+      history.push('/mypage');
+    } else {
+      alert('로그인 후 이용가능합니다.');
+      history.push('/signin');
+    }
+  };
+
   return (
     <Header>
       <Button>
@@ -43,7 +62,8 @@ function Nav() {
         </Lately>
       </Wrap>
       <Space>
-        <NavLink href="/hostpost">내 공간 등록하기</NavLink>
+        <NavLink onClick={moveMyPage}>마이페이지</NavLink>
+        <NavLink onClick={movePage}>내 공간 등록하기</NavLink>
       </Space>
       <KakaoButton onClick={handleToken}>
         <Login>로그인</Login>
@@ -69,6 +89,7 @@ const Header = styled.header`
   background: #fff;
   border-bottom: 1px solid #f6f6f6;
 `;
+
 const Button = styled.button`
   position: absolute;
   display: block;
@@ -80,6 +101,7 @@ const Button = styled.button`
   cursor: pointer;
   background: none;
 `;
+
 const OurSpace = styled.a`
   display: block;
   width: 200px;
@@ -90,6 +112,7 @@ const OurSpace = styled.a`
   text-indent: -999em;
   overflow: hidden;
 `;
+
 const Wrap = styled.div`
   position: relative;
   width: 100%;
@@ -97,6 +120,7 @@ const Wrap = styled.div`
   background: transparent;
   text-align: left;
 `;
+
 const Auto = styled.div`
   position: relative;
   width: 480px;
@@ -105,6 +129,7 @@ const Auto = styled.div`
   left: 0;
   top: 0;
 `;
+
 const Search = styled.button`
   position: absolute;
   top: 26px;
@@ -115,10 +140,10 @@ const Search = styled.button`
   border: none;
   background-image: url('/images/loupe.png');
   background-size: cover;
-  /* background: white; */
   background-repeat: no-repeat;
   z-index: 1;
 `;
+
 const Input = styled.input`
   position: relative;
   display: inline-block;
@@ -134,9 +159,9 @@ const Input = styled.input`
   font-size: 16px;
   vertical-align: middle;
   outline: none;
+
   &:focus {
     border: 1px solid #704de4;
-    /* background-color: #fff; */
   }
 `;
 const Space = styled.div`
@@ -144,17 +169,21 @@ const Space = styled.div`
   right: 85px;
   top: 0;
 `;
-const NavLink = styled.a`
+
+const NavLink = styled.button`
   display: block;
   padding: 0 10px;
   height: 78px;
   float: right;
-  line-height: 78px;
   color: #333;
+  border: none;
+  background: none;
   cursor: pointer;
-  font-size: 20px;
   text-decoration: none;
+  font-size: 20px;
+  line-height: 78px;
 `;
+
 const KakaoButton = styled.button`
   position: absolute;
   width: 88px;
@@ -170,6 +199,7 @@ const KakaoButton = styled.button`
   cursor: pointer;
   vertical-align: middle;
 `;
+
 const Login = styled.i`
   display: inline-block;
   width: 28px;
@@ -179,6 +209,7 @@ const Login = styled.i`
   color: transparent;
   background-repeat: no-repeat;
 `;
+
 const Lately = styled.div`
   width: 480px;
   height: 350px;
@@ -189,15 +220,18 @@ const Lately = styled.div`
   border: 1px solid #ebebeb;
   z-index: 1;
 `;
+
 const Flex = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 30px;
 `;
+
 const Title = styled.h2`
   font-size: 20px;
   font-weight: 600;
 `;
+
 const Delete = styled.p`
   color: #a1a1a1;
 `;

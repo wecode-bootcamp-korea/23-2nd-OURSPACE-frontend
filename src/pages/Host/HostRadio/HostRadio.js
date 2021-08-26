@@ -2,12 +2,12 @@ import React, { useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import HostRadioCom from './HostRadioCom';
-import { CATEGORY_API } from '../../../config';
+import { API } from '../../../config';
 
 function HostRadio({ button, setButton, setCheckedInputs, checkedInputs }) {
   const getData = useCallback(async () => {
     try {
-      const response = await axios.get(CATEGORY_API);
+      const response = await axios.get(API.CATEGORY_API);
       setButton(response.data.RESULT);
     } catch (error) {
       console.error(error);

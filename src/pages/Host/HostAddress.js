@@ -43,6 +43,7 @@ function HostAddress({
         placeholder="주소를 입력해 주세요."
         onChange={setAddressDetail}
         value={addressDetail}
+        readOnly
       />
 
       <FormButton onClick={onChangeOpenPost}>주소 찾기</FormButton>
@@ -60,9 +61,9 @@ function HostAddress({
 export default HostAddress;
 
 const POST_CODE_STYLE = {
-  display: 'block',
   position: 'relative',
   top: '0%',
+  display: 'block',
   width: '984px',
   height: '400px',
 };

@@ -31,18 +31,20 @@ const BtnImages = styled.div`
 `;
 
 const Button = styled.button`
-  background: none;
+  padding: 0;
   color: inherit;
   border: none;
-  padding: 0;
+  background: none;
   font: inherit;
   cursor: pointer;
   outline: inherit;
 `;
+
 const Text = styled.div`
   margin-top: 16px;
   font-size: 18px;
 `;
+
 const MainImage = styled.img.attrs(props => ({
   src: props.src,
 }))``;

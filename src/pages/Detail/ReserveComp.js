@@ -3,6 +3,8 @@ import { useHistory } from 'react-router';
 import styled from 'styled-components';
 import axios from 'axios';
 import CalenderComp from './CalenderComp';
+import { BASE_URL } from '../../config';
+import { API } from '../../config';
 
 function ReserveComp(props) {
   const { id, max_count, min_count, facility, price, title, image } =
@@ -81,18 +83,12 @@ function ReserveComp(props) {
     return reserveInfo;
   };
 
-  const handleCheckbox = e => {
-    const { value } = e.target;
-    console.log(value);
-  };
-
   const transferData = useCallback(async () => {
     try {
       const { date, option, count } = formValues;
       const time = parseInt(option);
-      console.log('try');
       await axios.post(
-        `http://10.58.3.76:8000/orders?space_id=${id}`,
+        `${BASE_URL}/orders?space_id=${id}`,
         {
           date: date,
           option: time,
@@ -100,11 +96,11 @@ function ReserveComp(props) {
         },
         {
           headers: {
-            Authorization: localStorage.getItem('access_token'),
+            Authorization: localStorage.getItem('login_kakao_token'),
           },
         }
       );
-      console.log('tryend');
+
       history.push({
         pathname: '/reserve',
         state: {
@@ -119,7 +115,9 @@ function ReserveComp(props) {
           facility: facility,
         },
       });
-    } catch (error) {}
+    } catch (error) {
+      alert('로그인 후 이용가능합니다.');
+    }
   }, [formValues.count]);
 
   useEffect(() => {
@@ -128,9 +126,7 @@ function ReserveComp(props) {
       const queryState = `status?date=${date}&option=${option}`;
       const checkReserveValidation = async () => {
         try {
-          await axios.get(
-            `http://10.58.3.76:8000/spaces/detail/${id}/${queryState}`
-          );
+          await axios.get(`${API.DETAIL}/${id}/${queryState}`);
           setTrueFalse(true);
         } catch (error) {
           setTrueFalse(false);
@@ -213,10 +209,7 @@ function ReserveComp(props) {
                 })}
             </FlexBoxUl>
           </section>
-          <ReserveTitle>
-            예약 선택 하기
-            <ReserveCheck type="checkbox" onClick={handleCheckbox} />
-          </ReserveTitle>
+          <ReserveTitle>예약 선택 하기</ReserveTitle>
           <div>
             <CalenderWrap>
               <CalenderTitle>날짜</CalenderTitle>

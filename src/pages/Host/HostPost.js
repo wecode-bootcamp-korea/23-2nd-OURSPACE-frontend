@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router';
 import styled from 'styled-components';
 import { css } from 'styled-components';
 import axios from 'axios';
@@ -9,7 +9,7 @@ import HostUpload from './HostUpload';
 import HostAddress from './HostAddress';
 import HostPerson from './HostPerson';
 import HostLocation from './HostLocation';
-import { HOST_API } from '../../config';
+import { API } from '../../config';
 
 function HostPost() {
   const history = useHistory();
@@ -52,6 +52,7 @@ function HostPost() {
   const [productList, setProductList] = useState([]);
 
   const [selectedFiles, setSelectedFiles] = useState([]);
+  const [imgSelectedFiles, setImgSelectedFiles] = useState([]);
 
   const [addressDetail, setAddressDetail] = useState('');
 
@@ -66,13 +67,15 @@ function HostPost() {
       const formData = new FormData();
       const headers = {
         'content-type': 'multipart/form-data',
-        Authorization: localStorage.getItem('access_token'),
+        Authorization: localStorage.getItem('login_kakao_token'),
       };
 
       formData.append('title', title);
       formData.append('sub_title', subTitle);
       formData.append('category', checkedInputs);
-      formData.append('image', selectedFiles);
+      for (let i = 0; i < imgSelectedFiles.length; i++) {
+        formData.append('image', imgSelectedFiles[i]);
+      }
       formData.append('district', location);
       formData.append('address', addressDetail);
       formData.append('price_all', allPrice);
@@ -81,11 +84,10 @@ function HostPost() {
       formData.append('facility', checkedBoxInputs);
       formData.append('max_count', number);
 
-      const response = await axios.post(HOST_API, formData, { headers });
+      const response = await axios.post(API.HOST_API, formData, { headers });
       response.data.message === 'success'
-        ? alert('와 성공했어용 !')
-        : alert('아앗,, 다시');
-      history.push('/');
+        ? history.push('/')
+        : alert('입력 내용을 확인해주세요.');
     } catch (error) {
       console.error(error);
     }
@@ -144,6 +146,8 @@ function HostPost() {
         <HostUpload
           selectedFiles={selectedFiles}
           setSelectedFiles={setSelectedFiles}
+          imgSelectedFiles={imgSelectedFiles}
+          setImgSelectedFiles={setImgSelectedFiles}
         />
         <FormBox>
           <FormText>

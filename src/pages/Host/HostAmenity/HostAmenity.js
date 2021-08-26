@@ -2,7 +2,7 @@ import React, { useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import HostAmenityCom from './HostAmenityCom';
-import { FACILITY_API } from '../../../config';
+import { API } from '../../../config';
 
 function HostAmenity({
   productList,
@@ -12,7 +12,7 @@ function HostAmenity({
 }) {
   const getData = useCallback(async () => {
     try {
-      const response = await axios.get(FACILITY_API);
+      const response = await axios.get(API.FACILITY_API);
       setProductList(response.data.results);
     } catch (error) {
       console.error(error);
@@ -69,27 +69,28 @@ const FormBoxTitle = styled.div`
 `;
 
 const FormBoxTitleOption = styled.span`
+  padding-left: 5px;
   color: #ff3a48;
   font-size: 24px;
-  padding-left: 5px;
   font-weight: 700;
 `;
 
 const FormBoxOption = styled.span`
-  font-size: 16px;
   color: #777;
+  font-size: 16px;
 `;
 
 const FormBoxAmenity = styled.div`
   margin-top: 40px;
   margin-bottom: 20px;
 `;
+
 const FormTextAmenity = styled.div`
-  border-bottom: 1px solid #777;
-  padding-bottom: 10px;
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #777;
 `;
 
 const FormIconWrap = styled.div`

@@ -15,6 +15,7 @@ function List() {
     items: 10,
     preItems: 0,
   });
+
   const [queryState, setQueryState] = useState({});
   const [areaData, setareaDate] = useState([]);
   const [areaSelect, setAreaSelect] = useState('');

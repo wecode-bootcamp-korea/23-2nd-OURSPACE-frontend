@@ -59,6 +59,7 @@ const settings = {
 
 const CarouselImage = styled.img`
   width: 773px;
+  height: 580px;
 
   &:focus {
     outline: none;
