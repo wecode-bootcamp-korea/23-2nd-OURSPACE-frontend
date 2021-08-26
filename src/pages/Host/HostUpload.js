@@ -10,7 +10,7 @@ function HostUpload({
   const handleImageChange = e => {
     if (e.target.files) {
       const imgFilesArray = Array.from(e.target.files);
-      console.log(e.target.files);
+
       setImgSelectedFiles(e.target.files);
 
       const filesArray = Array.from(e.target.files).map(file =>
