@@ -14,7 +14,7 @@
 
 # 적용 기술
   
-- Front-end : HTML5, JavaScript, React, React Router , Styled-component
+- Front-end : HTML5, JavaScript, React, Hook, React Router , Styled-component
 - Back-end: Python, Django, JWT, Unit Test, Docker, s3, MySQL
 - Common: AWS, RESTful API
   
