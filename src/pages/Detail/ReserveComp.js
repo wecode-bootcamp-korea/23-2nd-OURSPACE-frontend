@@ -100,7 +100,6 @@ function ReserveComp(props) {
           },
         }
       );
-
       history.push({
         pathname: '/reserve',
         state: {
