@@ -2,13 +2,24 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
+import { HOST_API } from '../../config';
 
-function HostUpload({ selectedFiles, setSelectedFiles }) {
+function HostUpload({
+  selectedFiles,
+  setSelectedFiles,
+  setImgSelectedFiles,
+  imgSelectedFiles,
+}) {
   const handleImageChange = e => {
     if (e.target.files) {
+      const imgFilesArray = Array.from(e.target.files);
+      console.log(e.target.files);
+      setImgSelectedFiles(e.target.files);
+
       const filesArray = Array.from(e.target.files).map(file =>
         URL.createObjectURL(file)
       );
+
       setSelectedFiles(prevImages => prevImages.concat(filesArray));
       Array.from(e.target.files).map(file => URL.revokeObjectURL(file));
     }

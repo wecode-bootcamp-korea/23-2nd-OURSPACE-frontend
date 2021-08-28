@@ -50,6 +50,7 @@ function HostPost() {
   const [productList, setProductList] = useState([]);
 
   const [selectedFiles, setSelectedFiles] = useState([]);
+  const [imgSelectedFiles, setImgSelectedFiles] = useState([]);
 
   const [addressDetail, setAddressDetail] = useState('');
 
@@ -70,7 +71,9 @@ function HostPost() {
       formData.append('title', title);
       formData.append('sub_title', subTitle);
       formData.append('category', checkedInputs);
-      formData.append('image', selectedFiles);
+      for (let i = 0; i < imgSelectedFiles.length; i++) {
+        formData.append('image', imgSelectedFiles[i]);
+      }
       formData.append('district', location);
       formData.append('address', addressDetail);
       formData.append('price_all', allPrice);
@@ -78,6 +81,7 @@ function HostPost() {
       formData.append('price_night', nightPrice);
       formData.append('facility', checkedBoxInputs);
       formData.append('max_count', number);
+      console.log(formData);
 
       const response = await axios.post(HOST_API, formData, { headers });
       response.data.message === 'success'
@@ -87,7 +91,7 @@ function HostPost() {
       console.error(error);
     }
   };
-
+  console.log(imgSelectedFiles);
   return (
     <HostPostWrap>
       <HostPostContent>
@@ -141,6 +145,8 @@ function HostPost() {
         <HostUpload
           selectedFiles={selectedFiles}
           setSelectedFiles={setSelectedFiles}
+          imgSelectedFiles={imgSelectedFiles}
+          setImgSelectedFiles={setImgSelectedFiles}
         />
         <FormBox>
           <FormText>
